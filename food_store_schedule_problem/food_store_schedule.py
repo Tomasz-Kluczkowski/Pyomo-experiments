@@ -31,6 +31,7 @@ model.needed = Var(workers, within=Binary, initialize=0)
 # 1 if worker does not work on Sunday but works on Saturday.
 model.no_pref = Var(workers, within=Binary, initialize=0)
 
+
 # Objective function:
 def obj_rule(m):
     c = len(workers)
@@ -38,6 +39,7 @@ def obj_rule(m):
     # We multiply by a constant 'c' to make sure that this part of the objective is most important.
     # Secondary objective is no_pref (avoiding scheduling 1 days in the weekends)
     return sum(m.no_pref[worker] for worker in workers) + sum(c * m.needed[worker] for worker in workers)
+
 
 # Now we can add the objective function to the model and set it to be minimized.
 # The objective now is to find a schedule minimizing the number of workers needed and once that is done, also reduce
@@ -123,6 +125,7 @@ solver_manager = SolverManagerFactory('neos')
 
 results = solver_manager.solve(model, opt=opt)
 
+
 def get_workers_needed(needed):
     """Extract to a list the needed workers for the optimal solution."""
     workers_needed = []
@@ -138,8 +141,8 @@ def get_work_table(works):
     for worker in workers:
         for day in days:
             for shift in days_shifts[day]:
-                    if works[worker, day, shift].value == 1:
-                        week_table[day][shift].append(worker)
+                if works[worker, day, shift].value == 1:
+                    week_table[day][shift].append(worker)
     return week_table
 
 
