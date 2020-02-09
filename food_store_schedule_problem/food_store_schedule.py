@@ -117,6 +117,15 @@ for worker in workers:
 
     )
 
+# My additional experiments
+
+# 6. Add a constraint that W1, W2 and W3 can never work the same shift (say they don't cooperate well :( ).
+for day in days:
+    for shift in days_shifts[day]:
+        model.constraints.add(
+            model.works['W1', day, shift] + model.works['W2', day, shift] + model.works['W3', day, shift] <= 1
+        )
+
 # We will use coin or branch and cut solver
 opt = SolverFactory('cbc')
 
