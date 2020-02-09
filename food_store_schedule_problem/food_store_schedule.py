@@ -55,7 +55,7 @@ model.constraints = ConstraintList()
 # 1. Constraint to make sure that all shifts are assigned and appropriate number of workers are working,
 for day in days:
     for shift in days_shifts[day]:
-        if day != 'Sunday' and shift in ['morning', 'evening']:
+        if day != 'Sun' and shift in ['morning', 'evening']:
             # Weekdays and Saturday, morning and evenings have 2 workers.
             # Note that constraints are booleans!
             # Here we make sure that for each variable in works for a given worker, day, shift the sum of Binary values
